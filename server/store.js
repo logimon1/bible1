@@ -1,5 +1,6 @@
 const fs = require("fs/promises");
 const path = require("path");
+const { Pool } = require("pg");
 const { createEmptyData, emptyInventory, ensureBooths, normalizeInventory } = (() => {
   const core = require("./core");
   return {
@@ -18,7 +19,7 @@ const { createEmptyData, emptyInventory, ensureBooths, normalizeInventory } = ((
 const DATA_FILE = path.resolve(process.env.DATA_FILE || path.join(process.cwd(), ".data", "dev-db.json"));
 let dataQueue = Promise.resolve();
 
-function shouldUseNeon() {
+function shouldUsePostgres() {
   return Boolean(process.env.DATABASE_URL && process.env.NODE_ENV !== "test-file");
 }
 
@@ -27,7 +28,7 @@ function requiresPersistentDatabase() {
 }
 
 function assertDataStoreReady() {
-  if (!shouldUseNeon() && requiresPersistentDatabase()) {
+  if (!shouldUsePostgres() && requiresPersistentDatabase()) {
     throw new Error("DATABASE_URL 환경변수를 설정해야 합니다. Vercel/production에서는 파일 DB를 사용할 수 없습니다.");
   }
 }
@@ -73,7 +74,7 @@ async function withFileData(mutator) {
   return result;
 }
 
-async function loadNeonData(client) {
+async function loadPostgresData(client) {
   const [playersResult, inventoryResult, drawLogsResult, qrClaimsResult, eventLogsResult, boothsResult] = await Promise.all([
     client.query("select id, name, team, gender, access_code, talent, exp, score, created_at, updated_at from players order by created_at"),
     client.query("select player_id, armor_code, grade, count from inventory"),
@@ -154,7 +155,7 @@ async function loadNeonData(client) {
   return normalizeDataShape(data);
 }
 
-async function saveNeonData(client, data) {
+async function savePostgresData(client, data) {
   const players = data.players.map((player) => ({
     id: player.id,
     name: player.name,
@@ -285,16 +286,15 @@ async function saveNeonData(client, data) {
   }
 }
 
-async function withNeonData(mutator) {
-  const { Pool } = await import("@neondatabase/serverless");
+async function withPostgresData(mutator) {
   const pool = new Pool({ connectionString: process.env.DATABASE_URL });
   const client = await pool.connect();
   try {
     await client.query("begin isolation level serializable");
     await client.query("select pg_advisory_xact_lock($1)", [91324027]);
-    const data = await loadNeonData(client);
+    const data = await loadPostgresData(client);
     const result = await mutator(data);
-    await saveNeonData(client, data);
+    await savePostgresData(client, data);
     await client.query("commit");
     return result;
   } catch (error) {
@@ -316,7 +316,7 @@ function enqueueDataWork(task) {
 
 async function withData(mutator) {
   assertDataStoreReady();
-  return enqueueDataWork(() => (shouldUseNeon() ? withNeonData(mutator) : withFileData(mutator)));
+  return enqueueDataWork(() => (shouldUsePostgres() ? withPostgresData(mutator) : withFileData(mutator)));
 }
 
 async function resetLocalData() {
@@ -327,6 +327,6 @@ module.exports = {
   DATA_FILE,
   assertDataStoreReady,
   resetLocalData,
-  shouldUseNeon,
+  shouldUsePostgres,
   withData
 };

@@ -12,6 +12,6 @@
     "check": "node --check app.js && node --check api/app.js && node --check server/api.js && node --check server/core.js && node --check server/store.js && node --check scripts/dev-server.js && node --check scripts/smoke-test.js"
   },
   "dependencies": {
-    "@neondatabase/serverless": "^1.0.2"
+    "pg": "^8.22.0"
   }
 }
