@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>인쇄용 산출물 인덱스</title>
+  <style>
+    @page { size: A4; margin: 12mm; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "Noto Sans KR", Arial, sans-serif; color: #2b2926; background: #f7f1df; }
+    h1, h2, h3 { margin: 0 0 10px; letter-spacing: 0; }
+    p { line-height: 1.55; margin: 6px 0; }
+    .sheet { max-width: 980px; margin: 0 auto; padding: 20px; }
+    .grid { display: grid; gap: 12px; }
+    .two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .card { background: #fffaf0; border: 2px solid #2b2926; border-radius: 8px; padding: 14px; page-break-inside: avoid; }
+    .badge { display: inline-block; padding: 4px 9px; border: 1px solid #2b2926; border-radius: 999px; background: #e9b64b; font-weight: 800; }
+    .muted { color: #6b6258; font-size: 12px; }
+    .qr { width: 120px; height: 120px; background: white; padding: 4px; border: 1px solid #2b2926; }
+    .cut { border: 1px dashed #777; }
+    table { width: 100%; border-collapse: collapse; background: #fffaf0; }
+    th, td { border: 1px solid #2b2926; padding: 8px; text-align: left; vertical-align: top; }
+    th { background: #e9dfc5; }
+    @media print {
+      body { background: white; }
+      .sheet { max-width: none; padding: 0; }
+      .no-print { display: none; }
+    }
+    
+  </style>
+</head>
+<body>
+  <main class="sheet"><h1>인쇄용 산출물</h1><section class="grid two"><article class="card"><h2>QR 카드</h2><p><a href="../02_qr_set/print/qr_cards.html">../02_qr_set/print/qr_cards.html</a></p></article><article class="card"><h2>학생용 워크북</h2><p><a href="../03_workbook_student/print/student_workbook.html">../03_workbook_student/print/student_workbook.html</a></p></article><article class="card"><h2>교사용 매뉴얼</h2><p><a href="../04_manual_teacher/print/teacher_manual.html">../04_manual_teacher/print/teacher_manual.html</a></p></article><article class="card"><h2>장비카드</h2><p><a href="../05_equipment_cards/print/equipment_cards.html">../05_equipment_cards/print/equipment_cards.html</a></p></article><article class="card"><h2>교환소 포스터</h2><p><a href="../06_exchange_set/print/exchange_poster.html">../06_exchange_set/print/exchange_poster.html</a></p></article><article class="card"><h2>스티커 시트</h2><p><a href="../07_stickers/print/sticker_sheet.html">../07_stickers/print/sticker_sheet.html</a></p></article></section></main>
+</body>
+</html>

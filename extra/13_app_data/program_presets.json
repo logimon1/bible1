@@ -1,0 +1,33 @@
+{
+  "retreat": {
+    "programMode": "retreat",
+    "eventName": "전신갑주 QR RPG 수련회",
+    "recommendedDuration": "1~3일",
+    "enabledMissionCodes": [
+      "tutorial-entry",
+      "mission-truth",
+      "mission-faith",
+      "mission-word",
+      "hidden-forest-cache-1",
+      "hidden-verse-cache-2",
+      "exchange-booth-1",
+      "exchange-booth-2",
+      "boss-forest"
+    ]
+  },
+  "monthly": {
+    "programMode": "monthly",
+    "eventName": "전신갑주 QR RPG 한 달 챌린지",
+    "recommendedDuration": "4주",
+    "currentWeek": 1,
+    "enabledMissionCodes": [
+      "tutorial-entry",
+      "mission-truth",
+      "mission-righteousness",
+      "mission-gospel",
+      "mission-faith",
+      "mission-salvation",
+      "mission-word"
+    ]
+  }
+}

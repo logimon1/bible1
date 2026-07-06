@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#173f35"/>
+      <stop offset="1" stop-color="#243b69"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <circle cx="1240" cy="180" r="170" fill="#e9b64b" opacity=".2"/>
+  <path d="M800 138c188 96 310 112 310 112 0 312-126 474-310 606C616 724 490 562 490 250c0 0 122-16 310-112z" fill="#f8ecd0" opacity=".12" stroke="#e9b64b" stroke-width="18"/>
+  <path d="M800 240v370M640 430h320" stroke="#e9b64b" stroke-width="34" stroke-linecap="round"/>
+  <text x="800" y="740" text-anchor="middle" font-family="Arial, sans-serif" font-size="72" font-weight="900" fill="#fffaf0">전신갑주 QR RPG</text>
+  <text x="800" y="805" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" fill="#f8ecd0">말씀을 배우고, 미션을 수행하고, 믿음의 장비를 모으는 교회 프로그램</text>
+</svg>

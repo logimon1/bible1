@@ -1,0 +1,86 @@
+[
+  {
+    "id": "complete",
+    "label": "미션 완료",
+    "use": "칭찬/보상",
+    "file": "../print/sticker_complete.svg",
+    "priority": "P1"
+  },
+  {
+    "id": "encourage",
+    "label": "잘하고 있어",
+    "use": "격려",
+    "file": "../print/sticker_encourage.svg",
+    "priority": "P1"
+  },
+  {
+    "id": "truth",
+    "label": "진리 붙들기",
+    "use": "말씀 아이콘",
+    "file": "../print/sticker_truth.svg",
+    "priority": "P1"
+  },
+  {
+    "id": "faith",
+    "label": "믿음 선택",
+    "use": "말씀 아이콘",
+    "file": "../print/sticker_faith.svg",
+    "priority": "P1"
+  },
+  {
+    "id": "peace",
+    "label": "평안 전달",
+    "use": "말씀 아이콘",
+    "file": "../print/sticker_peace.svg",
+    "priority": "P1"
+  },
+  {
+    "id": "finish",
+    "label": "완주",
+    "use": "완주 인증",
+    "file": "../print/sticker_finish.svg",
+    "priority": "P1"
+  },
+  {
+    "id": "teamwork",
+    "label": "팀워크",
+    "use": "팀 보상",
+    "file": "../print/sticker_teamwork.svg",
+    "priority": "P2"
+  },
+  {
+    "id": "bonus",
+    "label": "보너스 QR",
+    "use": "히든 QR",
+    "file": "../print/sticker_bonus.svg",
+    "priority": "P2"
+  },
+  {
+    "id": "hint",
+    "label": "힌트권",
+    "use": "교환소",
+    "file": "../print/sticker_hint.svg",
+    "priority": "P2"
+  },
+  {
+    "id": "retry",
+    "label": "재도전권",
+    "use": "교환소",
+    "file": "../print/sticker_retry.svg",
+    "priority": "P2"
+  },
+  {
+    "id": "talent",
+    "label": "달란트",
+    "use": "보상",
+    "file": "../print/sticker_talent.svg",
+    "priority": "P2"
+  },
+  {
+    "id": "verse",
+    "label": "오늘의 말씀",
+    "use": "워크북 꾸미기",
+    "file": "../print/sticker_verse.svg",
+    "priority": "P2"
+  }
+]

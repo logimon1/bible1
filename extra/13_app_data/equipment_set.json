@@ -1,0 +1,68 @@
+[
+  {
+    "id": "belt",
+    "name": "진리의 허리띠",
+    "verse": "에베소서 6:14",
+    "color": "#b98535",
+    "theme": "진리",
+    "description": "말과 상황을 하나님의 진리로 분별하도록 돕는 장비입니다.",
+    "effect": "거짓 분별 미션에서 힌트 1개",
+    "unlockCondition": "진리 미션 완료",
+    "printText": "진리로 마음을 단단히 묶으세요."
+  },
+  {
+    "id": "breastplate",
+    "name": "의의 흉배",
+    "verse": "에베소서 6:14",
+    "color": "#d8dce2",
+    "theme": "의",
+    "description": "예수님의 의로 마음과 정체성을 지키는 장비입니다.",
+    "effect": "정체성 고백 미션에서 재도전 1회",
+    "unlockCondition": "의 미션 완료",
+    "printText": "예수님의 의로 마음을 지키세요."
+  },
+  {
+    "id": "shoes",
+    "name": "평안의 복음의 신",
+    "verse": "에베소서 6:15",
+    "color": "#49b999",
+    "theme": "평안",
+    "description": "복음의 평안을 들고 움직이게 하는 장비입니다.",
+    "effect": "전달/격려 미션에서 추가 달란트",
+    "unlockCondition": "평안 미션 완료",
+    "printText": "복음의 평안을 들고 걸어가세요."
+  },
+  {
+    "id": "shield",
+    "name": "믿음의 방패",
+    "verse": "에베소서 6:16",
+    "color": "#294c8a",
+    "theme": "믿음",
+    "description": "두려움과 의심을 믿음으로 막는 장비입니다.",
+    "effect": "시련의 숲 방해 1회 무효",
+    "unlockCondition": "믿음 미션 완료",
+    "printText": "믿음으로 두려움을 막으세요."
+  },
+  {
+    "id": "helmet",
+    "name": "구원의 투구",
+    "verse": "에베소서 6:17",
+    "color": "#e1b84b",
+    "theme": "구원",
+    "description": "구원의 확신으로 생각을 지키는 장비입니다.",
+    "effect": "보기 제거 또는 힌트 1개",
+    "unlockCondition": "구원 미션 완료",
+    "printText": "구원의 확신으로 생각을 지키세요."
+  },
+  {
+    "id": "sword",
+    "name": "성령의 검",
+    "verse": "에베소서 6:17",
+    "color": "#4a8fb8",
+    "theme": "말씀",
+    "description": "하나님의 말씀으로 선택하고 결단하게 하는 장비입니다.",
+    "effect": "최종 미션에서 말씀 힌트 1개",
+    "unlockCondition": "말씀/결단 미션 완료",
+    "printText": "말씀으로 오늘의 선택을 세우세요."
+  }
+]

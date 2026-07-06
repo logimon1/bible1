@@ -1,0 +1,74 @@
+[
+  {
+    "asset": "main_key_visual",
+    "usage": "포스터/표지",
+    "size": "A3/16:9",
+    "transparent": "no",
+    "method": "AI image",
+    "priority": "P1",
+    "quantity": 2
+  },
+  {
+    "asset": "equipment_illustrations",
+    "usage": "카드/앱/스티커",
+    "size": "1:1 2048px",
+    "transparent": "yes",
+    "method": "AI image",
+    "priority": "P0",
+    "quantity": 6
+  },
+  {
+    "asset": "equipment_icons",
+    "usage": "UI/QR 카드",
+    "size": "SVG 1:1",
+    "transparent": "yes",
+    "method": "vector",
+    "priority": "P0",
+    "quantity": 6
+  },
+  {
+    "asset": "workbook_cover",
+    "usage": "학생용 교재",
+    "size": "B5/A4",
+    "transparent": "no",
+    "method": "AI image + layout",
+    "priority": "P1",
+    "quantity": 2
+  },
+  {
+    "asset": "exchange_poster_bg",
+    "usage": "교환소 포스터",
+    "size": "A3",
+    "transparent": "no",
+    "method": "AI image",
+    "priority": "P1",
+    "quantity": 1
+  },
+  {
+    "asset": "sticker_characters",
+    "usage": "스티커",
+    "size": "1:1",
+    "transparent": "yes",
+    "method": "AI image",
+    "priority": "P1",
+    "quantity": 12
+  },
+  {
+    "asset": "boss_symbol",
+    "usage": "보스전/결단",
+    "size": "4:3",
+    "transparent": "no",
+    "method": "AI image",
+    "priority": "P2",
+    "quantity": 2
+  },
+  {
+    "asset": "qr_codes",
+    "usage": "QR 기능 자산",
+    "size": "SVG",
+    "transparent": "no",
+    "method": "code generation",
+    "priority": "P0",
+    "quantity": 12
+  }
+]

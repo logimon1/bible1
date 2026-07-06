@@ -1,0 +1,28 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "installCommand": "npm install",
+  "buildCommand": "npm run build",
+  "outputDirectory": "public",
+  "rewrites": [
+    { "source": "/exchange/:booth", "destination": "/index.html" },
+    { "source": "/ranking", "destination": "/index.html" },
+    { "source": "/team-ranking", "destination": "/index.html" },
+    { "source": "/monthly", "destination": "/index.html" },
+    { "source": "/forest", "destination": "/index.html" },
+    { "source": "/admin", "destination": "/index.html" },
+    { "source": "/admin/print/:page", "destination": "/index.html" },
+    { "source": "/qr/:code*", "destination": "/index.html" },
+    { "source": "/mission/:code*", "destination": "/index.html" },
+    { "source": "/hidden/:code*", "destination": "/index.html" },
+    { "source": "/boss", "destination": "/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-store" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,201 @@
+{
+  "programMode": "retreat",
+  "churchName": "샘플교회",
+  "eventName": "전신갑주 QR RPG 운영 세트",
+  "eventStartDate": "2026-07-24",
+  "eventEndDate": "2026-07-26",
+  "participantLimit": 80,
+  "teamMode": true,
+  "currentWeek": 1,
+  "rewardPolicy": {
+    "drawCounts": [1, 2, 3],
+    "duplicatePolicy": "once_per_participant_per_mission",
+    "talentPerMission": 10,
+    "retreatSpeed": "fast",
+    "monthlySpeed": "weekly"
+  },
+  "missionUnlockPolicy": {
+    "retreat": "manual_or_always",
+    "monthly": "week_index",
+    "allowPastWeeks": true,
+    "lockFutureWeeks": true
+  },
+  "exchangeSettings": {
+    "boothCount": 2,
+    "maxItemsPerTrade": 2,
+    "expiresMinutes": 10,
+    "teacherConfirmed": true
+  },
+  "adminSettings": {
+    "adminCodeEnv": "ADMIN_PIN",
+    "allowReset": true,
+    "allowCsvExport": true,
+    "allowManualRewards": true
+  },
+  "equipmentSet": [
+    {
+      "id": "belt",
+      "name": "진리의 허리띠",
+      "verse": "에베소서 6:14",
+      "description": "거짓을 분별하고 진리 위에 서는 장비입니다.",
+      "effect": "거짓 분별 미션에서 힌트를 얻습니다.",
+      "unlockCondition": "1주차 또는 진리 미션 완료",
+      "printText": "진리로 마음을 단단히 묶으세요."
+    },
+    {
+      "id": "breastplate",
+      "name": "의의 흉배",
+      "verse": "에베소서 6:14",
+      "description": "정죄와 죄책감에서 마음을 지키는 장비입니다.",
+      "effect": "정죄 미션에서 실패 부담을 줄입니다.",
+      "unlockCondition": "1주차 또는 의 미션 완료",
+      "printText": "예수님의 의로 마음을 지키세요."
+    },
+    {
+      "id": "shoes",
+      "name": "평안의 복음의 신",
+      "verse": "에베소서 6:15",
+      "description": "복음을 전하는 발걸음을 상징합니다.",
+      "effect": "이동/전달 미션에서 시간을 얻습니다.",
+      "unlockCondition": "2주차 또는 복음 미션 완료",
+      "printText": "복음의 평안을 들고 걸어가세요."
+    },
+    {
+      "id": "shield",
+      "name": "믿음의 방패",
+      "verse": "에베소서 6:16",
+      "description": "두려움과 의심을 막는 장비입니다.",
+      "effect": "마귀 방해를 한 번 막습니다.",
+      "unlockCondition": "3주차 또는 믿음 미션 완료",
+      "printText": "믿음으로 두려움을 막으세요."
+    },
+    {
+      "id": "helmet",
+      "name": "구원의 투구",
+      "verse": "에베소서 6:17",
+      "description": "구원의 확신과 정체성을 지키는 장비입니다.",
+      "effect": "혼란 미션에서 보기 하나를 제거합니다.",
+      "unlockCondition": "3주차 또는 구원 미션 완료",
+      "printText": "구원의 확신으로 생각을 지키세요."
+    },
+    {
+      "id": "sword",
+      "name": "성령의 검",
+      "verse": "에베소서 6:17",
+      "description": "하나님의 말씀으로 싸우는 장비입니다.",
+      "effect": "말씀 미션에서 추가 힌트를 얻습니다.",
+      "unlockCondition": "4주차 또는 말씀 미션 완료",
+      "printText": "말씀으로 오늘의 선택을 세우세요."
+    }
+  ],
+  "qrSet": [
+    {
+      "code": "mission-truth",
+      "mode": "retreat",
+      "phase": "opening",
+      "weekIndex": 1,
+      "title": "진리 분별 미션",
+      "shortDescription": "말씀과 상황 카드 중 거짓을 분별합니다.",
+      "verse": "에베소서 6:14",
+      "armor": "belt",
+      "reward": { "draws": 1, "talent": 10 },
+      "smallGroupQuestion": "이번 주 내가 붙들어야 할 진리는 무엇인가요?"
+    },
+    {
+      "code": "mission-righteousness",
+      "mode": "monthly",
+      "phase": "week1",
+      "weekIndex": 1,
+      "title": "의의 고백 미션",
+      "shortDescription": "정죄의 문장을 복음적 고백으로 바꿉니다.",
+      "verse": "에베소서 6:14",
+      "armor": "breastplate",
+      "reward": { "draws": 1, "talent": 10 },
+      "smallGroupQuestion": "나는 어떤 말로 내 정체성을 흔들리게 하나요?"
+    },
+    {
+      "code": "mission-gospel",
+      "mode": "monthly",
+      "phase": "week2",
+      "weekIndex": 2,
+      "title": "복음의 발걸음 미션",
+      "shortDescription": "한 사람에게 격려와 복음의 메시지를 전합니다.",
+      "verse": "에베소서 6:15",
+      "armor": "shoes",
+      "reward": { "draws": 1, "talent": 12 },
+      "smallGroupQuestion": "이번 주 내가 복음의 평안을 전할 사람은 누구인가요?"
+    },
+    {
+      "code": "mission-faith",
+      "mode": "retreat",
+      "phase": "forest",
+      "weekIndex": 3,
+      "title": "믿음의 방패 미션",
+      "shortDescription": "두려움 카드 앞에서 믿음의 선택을 고백합니다.",
+      "verse": "에베소서 6:16",
+      "armor": "shield",
+      "reward": { "draws": 1, "talent": 10 },
+      "smallGroupQuestion": "내가 믿음으로 막아야 할 두려움은 무엇인가요?"
+    },
+    {
+      "code": "mission-salvation",
+      "mode": "monthly",
+      "phase": "week3",
+      "weekIndex": 3,
+      "title": "구원의 확신 미션",
+      "shortDescription": "구원 확신과 정체성 문장을 맞춥니다.",
+      "verse": "에베소서 6:17",
+      "armor": "helmet",
+      "reward": { "draws": 1, "talent": 12 },
+      "smallGroupQuestion": "하나님이 나를 어떤 사람으로 부르셨나요?"
+    },
+    {
+      "code": "mission-word",
+      "mode": "retreat",
+      "phase": "boss",
+      "weekIndex": 4,
+      "title": "성령의 검 미션",
+      "shortDescription": "말씀 구절을 찾아 오늘의 선택에 적용합니다.",
+      "verse": "에베소서 6:17",
+      "armor": "sword",
+      "reward": { "draws": 1, "talent": 15 },
+      "smallGroupQuestion": "이번 주 내 선택을 이끌 말씀은 무엇인가요?"
+    },
+    {
+      "code": "hidden-forest-cache-1",
+      "mode": "retreat",
+      "phase": "hidden",
+      "weekIndex": 1,
+      "title": "숨겨진 숲 보급품 1",
+      "shortDescription": "시련의 숲 주변 히든 QR 보상입니다.",
+      "verse": "에베소서 6:13",
+      "armor": "shield",
+      "reward": { "draws": 2, "talent": 10 },
+      "smallGroupQuestion": "어려움 속에서도 붙드는 믿음은 무엇인가요?"
+    },
+    {
+      "code": "hidden-verse-cache-2",
+      "mode": "retreat",
+      "phase": "hidden",
+      "weekIndex": 1,
+      "title": "숨겨진 말씀 조각",
+      "shortDescription": "말씀 조각을 찾는 보너스 QR입니다.",
+      "verse": "시편 119:105",
+      "armor": "sword",
+      "reward": { "draws": 0, "talent": 15 },
+      "smallGroupQuestion": "말씀은 나의 길에서 어떤 빛이 되나요?"
+    },
+    {
+      "code": "boss-forest",
+      "mode": "retreat",
+      "phase": "boss",
+      "weekIndex": 4,
+      "title": "최종 결단 미션",
+      "shortDescription": "전신갑주를 확인하고 마지막 결단을 고백합니다.",
+      "verse": "에베소서 6:13",
+      "armor": "sword",
+      "reward": { "draws": 3, "talent": 20 },
+      "smallGroupQuestion": "수련회 이후 내가 지킬 결단은 무엇인가요?"
+    }
+  ]
+}

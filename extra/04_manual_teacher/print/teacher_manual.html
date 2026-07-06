@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>교사용 운영 매뉴얼</title>
+  <style>
+    @page { size: A4; margin: 12mm; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "Noto Sans KR", Arial, sans-serif; color: #2b2926; background: #f7f1df; }
+    h1, h2, h3 { margin: 0 0 10px; letter-spacing: 0; }
+    p { line-height: 1.55; margin: 6px 0; }
+    .sheet { max-width: 980px; margin: 0 auto; padding: 20px; }
+    .grid { display: grid; gap: 12px; }
+    .two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .card { background: #fffaf0; border: 2px solid #2b2926; border-radius: 8px; padding: 14px; page-break-inside: avoid; }
+    .badge { display: inline-block; padding: 4px 9px; border: 1px solid #2b2926; border-radius: 999px; background: #e9b64b; font-weight: 800; }
+    .muted { color: #6b6258; font-size: 12px; }
+    .qr { width: 120px; height: 120px; background: white; padding: 4px; border: 1px solid #2b2926; }
+    .cut { border: 1px dashed #777; }
+    table { width: 100%; border-collapse: collapse; background: #fffaf0; }
+    th, td { border: 1px solid #2b2926; padding: 8px; text-align: left; vertical-align: top; }
+    th { background: #e9dfc5; }
+    @media print {
+      body { background: white; }
+      .sheet { max-width: none; padding: 0; }
+      .no-print { display: none; }
+    }
+    
+  </style>
+</head>
+<body>
+  <main class="sheet"><h1>교사용 운영 매뉴얼</h1>
+  <section class="card"><h2>현장 30분 전 체크</h2><ul><li>QR 스캔 테스트</li><li>관리자 접속 테스트</li><li>교환소 담당자 확인</li><li>예비 QR 출력</li><li>보상 기준 공유</li></ul></section>
+  <section class="card"><h2>운영 순서</h2><table><tr><th>단계</th><th>할 일</th><th>담당</th></tr><tr><td>오프닝</td><td>학생 등록/튜토리얼</td><td>사회자</td></tr><tr><td>미션</td><td>QR 미션 운영</td><td>조 담당</td></tr><tr><td>교환소</td><td>교환 질서 관리</td><td>교환소 담당</td></tr><tr><td>마무리</td><td>랭킹/결단/완주</td><td>전체</td></tr></table></section></main>
+</body>
+</html>

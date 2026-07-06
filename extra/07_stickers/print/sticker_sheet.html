@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>스티커 시트</title>
+  <style>
+    @page { size: A4; margin: 12mm; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "Noto Sans KR", Arial, sans-serif; color: #2b2926; background: #f7f1df; }
+    h1, h2, h3 { margin: 0 0 10px; letter-spacing: 0; }
+    p { line-height: 1.55; margin: 6px 0; }
+    .sheet { max-width: 980px; margin: 0 auto; padding: 20px; }
+    .grid { display: grid; gap: 12px; }
+    .two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .card { background: #fffaf0; border: 2px solid #2b2926; border-radius: 8px; padding: 14px; page-break-inside: avoid; }
+    .badge { display: inline-block; padding: 4px 9px; border: 1px solid #2b2926; border-radius: 999px; background: #e9b64b; font-weight: 800; }
+    .muted { color: #6b6258; font-size: 12px; }
+    .qr { width: 120px; height: 120px; background: white; padding: 4px; border: 1px solid #2b2926; }
+    .cut { border: 1px dashed #777; }
+    table { width: 100%; border-collapse: collapse; background: #fffaf0; }
+    th, td { border: 1px solid #2b2926; padding: 8px; text-align: left; vertical-align: top; }
+    th { background: #e9dfc5; }
+    @media print {
+      body { background: white; }
+      .sheet { max-width: none; padding: 0; }
+      .no-print { display: none; }
+    }
+    
+  </style>
+</head>
+<body>
+  <main class="sheet"><h1>스티커 시트</h1><p class="muted">정식 제작 시 반칼선은 별도 레이어로 제작합니다.</p><section class="grid three"><article class="card cut" style="text-align:center"><img src="sticker_complete.svg" style="width:92px;height:92px"><p><strong>미션 완료</strong></p></article><article class="card cut" style="text-align:center"><img src="sticker_encourage.svg" style="width:92px;height:92px"><p><strong>잘하고 있어</strong></p></article><article class="card cut" style="text-align:center"><img src="sticker_truth.svg" style="width:92px;height:92px"><p><strong>진리 붙들기</strong></p></article><article class="card cut" style="text-align:center"><img src="sticker_faith.svg" style="width:92px;height:92px"><p><strong>믿음 선택</strong></p></article><article class="card cut" style="text-align:center"><img src="sticker_peace.svg" style="width:92px;height:92px"><p><strong>평안 전달</strong></p></article><article class="card cut" style="text-align:center"><img src="sticker_finish.svg" style="width:92px;height:92px"><p><strong>완주</strong></p></article><article class="card cut" style="text-align:center"><img src="sticker_teamwork.svg" style="width:92px;height:92px"><p><strong>팀워크</strong></p></article><article class="card cut" style="text-align:center"><img src="sticker_bonus.svg" style="width:92px;height:92px"><p><strong>보너스 QR</strong></p></article><article class="card cut" style="text-align:center"><img src="sticker_hint.svg" style="width:92px;height:92px"><p><strong>힌트권</strong></p></article><article class="card cut" style="text-align:center"><img src="sticker_retry.svg" style="width:92px;height:92px"><p><strong>재도전권</strong></p></article><article class="card cut" style="text-align:center"><img src="sticker_talent.svg" style="width:92px;height:92px"><p><strong>달란트</strong></p></article><article class="card cut" style="text-align:center"><img src="sticker_verse.svg" style="width:92px;height:92px"><p><strong>오늘의 말씀</strong></p></article></section></main>
+</body>
+</html>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="진리의 허리띠">
+  <rect width="512" height="512" rx="88" fill="#fff6df"/>
+  <circle cx="256" cy="256" r="194" fill="#b98535" opacity="0.18"/>
+  <path d="M256 78c78 42 132 50 132 50 0 160-58 244-132 306-74-62-132-146-132-306 0 0 54-8 132-50z" fill="#b98535" stroke="#2b2926" stroke-width="16"/>
+  <path d="M176 256h160M256 156v200" stroke="#fffaf0" stroke-width="24" stroke-linecap="round"/>
+  <text x="256" y="462" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" font-weight="800" fill="#2b2926">진리</text>
+</svg>
