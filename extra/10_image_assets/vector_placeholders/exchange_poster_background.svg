@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 1754">
-  <rect width="1240" height="1754" fill="#f8ecd0"/>
-  <rect x="90" y="120" width="1060" height="1440" rx="70" fill="#fffaf0" stroke="#2b2926" stroke-width="14"/>
-  <path d="M160 390h920M160 1170h920" stroke="#b98535" stroke-width="18" stroke-linecap="round"/>
-  <circle cx="310" cy="770" r="150" fill="#e9b64b" opacity=".28"/>
-  <circle cx="930" cy="770" r="150" fill="#49b999" opacity=".28"/>
-  <text x="620" y="250" text-anchor="middle" font-family="Arial, sans-serif" font-size="76" font-weight="900" fill="#2b2926">교환소 포스터 배경</text>
-  <text x="620" y="1510" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" fill="#6b6258">QR과 가격표는 코드/편집 레이어로 배치</text>
-</svg>

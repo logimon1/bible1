@@ -19,7 +19,6 @@
 - 09_content_monthly
 - 10_image_assets/manifest
 - 10_image_assets/prompts
-- 10_image_assets/vector_placeholders
 - 10_image_assets/production_svg
 - 11_print_ready
 - 12_guides

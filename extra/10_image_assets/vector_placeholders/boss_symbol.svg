@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800">
-  <defs><linearGradient id="b" x1="0" x2="1"><stop stop-color="#173f35"/><stop offset="1" stop-color="#243b69"/></linearGradient></defs>
-  <rect width="1200" height="800" fill="url(#b)"/>
-  <path d="M600 90c180 92 298 108 298 108 0 302-124 454-298 584-174-130-298-282-298-584 0 0 118-16 298-108z" fill="#fffaf0" opacity=".14" stroke="#e9b64b" stroke-width="16"/>
-  <path d="M600 190v380M448 378h304" stroke="#e9b64b" stroke-width="32" stroke-linecap="round"/>
-  <text x="600" y="695" text-anchor="middle" font-family="Arial, sans-serif" font-size="54" font-weight="900" fill="#fffaf0">최종 결단 미션 상징</text>
-</svg>

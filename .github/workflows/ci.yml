@@ -6,7 +6,8 @@ on:
   pull_request:
 
 jobs:
-  check:
+  legacy-root:
+    name: Legacy root MVP
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -14,6 +15,41 @@ jobs:
         with:
           node-version: 22
           cache: npm
+          cache-dependency-path: package-lock.json
       - run: npm ci
       - run: npm run check
       - run: npm run smoke
+
+  productized-app:
+    name: Productized app
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: productized-qr-rpg
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: productized-qr-rpg/package-lock.json
+      - run: npm ci
+      - run: npm run doctor
+      - run: npm run check
+      - run: npm run smoke
+
+  delivery-package:
+    name: Delivery package
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: extra
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: extra/package-lock.json
+      - run: npm ci
+      - run: npm run check

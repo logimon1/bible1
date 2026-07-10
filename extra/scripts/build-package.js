@@ -24,7 +24,6 @@ const dirs = [
   "09_content_monthly",
   "10_image_assets/manifest",
   "10_image_assets/prompts",
-  "10_image_assets/vector_placeholders",
   "10_image_assets/production_svg",
   "11_print_ready",
   "12_guides",
@@ -663,7 +662,7 @@ ${markdownTable(["순서", "수련회", "한 달"], [
 function writeEquipmentCards() {
   write("05_equipment_cards/data/equipment_cards.json", JSON.stringify(equipment, null, 2));
   const cards = equipment.map((item) => `<article class="card cut">
-    <img src="../../10_image_assets/vector_placeholders/equipment_${item.id}.svg" alt="${item.name}" style="width:96px;height:96px">
+    <img src="../../10_image_assets/production_svg/equipment_illustration_${item.id}.svg" alt="${item.name}" style="width:96px;height:96px">
     <h2>${item.name}</h2>
     <p><strong>${item.verse}</strong></p>
     <p>${item.description}</p>
@@ -770,14 +769,6 @@ function writeImageAssets() {
     ...assetRows.map((row) => row.map(csvEscape).join(","))
   ].join("\n"));
   write("10_image_assets/manifest/image_asset_manifest.json", JSON.stringify(assetRows.map(([asset, usage, size, transparent, method, priority, quantity]) => ({ asset, usage, size, transparent, method, priority, quantity })), null, 2));
-
-  equipment.forEach((item) => write(`10_image_assets/vector_placeholders/equipment_${item.id}.svg`, equipmentIconSvg(item)));
-  equipment.forEach((item) => write(`10_image_assets/vector_placeholders/card_background_${item.id}.svg`, cardBackgroundSvg(item)));
-  write("10_image_assets/vector_placeholders/main_key_visual_placeholder.svg", keyVisualSvg());
-  write("10_image_assets/vector_placeholders/workbook_cover_retreat.svg", coverSvg("retreat"));
-  write("10_image_assets/vector_placeholders/workbook_cover_monthly.svg", coverSvg("monthly"));
-  write("10_image_assets/vector_placeholders/exchange_poster_background.svg", exchangeBackgroundSvg());
-  write("10_image_assets/vector_placeholders/boss_symbol.svg", bossSymbolSvg());
 
   write("10_image_assets/prompts/ai_generation_prompts.md", `# AI 이미지 생성 실행 지침
 
@@ -990,37 +981,6 @@ function writeAppData() {
       enabledMissionCodes: missions.filter((mission) => mission.mode === "monthly" || mission.mode === "both").map((mission) => mission.code)
     }
   }, null, 2));
-}
-
-function writeCompletionAudit() {
-  write("12_guides/completion_audit.md", `# 7단계 완료 검수표
-
-## 목표
-사용자가 요청한 "너가 제안한 7단계까지 작업 모두 진행" 범위를 extra 폴더 안에서 산출물로 구현했는지 확인합니다.
-
-## 검수 결과
-${markdownTable(["단계", "요구", "증거 파일"], [
-  ["1", "제품 골격 확정", "01_brand/brand_system.md, 12_guides/production_roadmap.md"],
-  ["2", "콘텐츠 원고 제작", "08_content_retreat/retreat_content.md, 09_content_monthly/monthly_content.md"],
-  ["3", "기능성 자산 제작", "02_qr_set/svg/*.svg, 02_qr_set/data/qr_index.json, 13_app_data/*.json"],
-  ["4", "핵심 비주얼 제작", "10_image_assets/vector_placeholders/*.svg, 10_image_assets/prompts/ai_generation_prompts.md"],
-  ["5", "인쇄물 편집/PDF 생성", "03~07 print HTML, 11_print_ready/*.pdf"],
-  ["6", "현장 리허설", "12_guides/rehearsal_checklist.md"],
-  ["7", "납품 패키지화", "00_README.md, 12_guides/handoff_manifest.md, npm run verify"]
-])}
-
-## 자동 검증
-\`npm run check\`는 다음을 확인합니다.
-
-- 필수 폴더 13개 존재
-- QR SVG와 QR 인덱스 존재
-- 수련회/한 달 콘텐츠 존재
-- 워크북/매뉴얼/장비카드/교환소/스티커 인쇄물 존재
-- PDF 6종 존재 및 최소 파일 크기 확인
-- 장비 6종 데이터 존재
-- QR 본체를 AI 이미지로 만들지 않는 정책 명시
-- 1~7단계 로드맵 문서화
-`);
 }
 
 function writeCompletionAudit() {
