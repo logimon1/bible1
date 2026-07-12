@@ -1,5 +1,6 @@
 const fs = require("fs/promises");
 const path = require("path");
+const { AsyncLocalStorage } = require("async_hooks");
 const { Pool } = require("pg");
 const { createEmptyData, emptyInventory, ensureBooths, normalizeInventory } = (() => {
   const core = require("./core");
@@ -17,6 +18,9 @@ const { createEmptyData, emptyInventory, ensureBooths, normalizeInventory } = ((
 })();
 
 const DATA_FILE = path.resolve(process.env.DATA_FILE || path.join(process.cwd(), ".data", "dev-db.json"));
+const requestContext = new AsyncLocalStorage();
+const READ_ONLY_ACTIONS = new Set(["state", "ranking", "booth", "admin", "qr-state"]);
+const POOL_KEY = Symbol.for("armor-rpg.postgres-pool");
 let dataQueue = Promise.resolve();
 
 function shouldUsePostgres() {
@@ -31,6 +35,27 @@ function assertDataStoreReady() {
   if (!shouldUsePostgres() && requiresPersistentDatabase()) {
     throw new Error("DATABASE_URL 환경변수를 설정해야 합니다. Vercel/production에서는 파일 DB를 사용할 수 없습니다.");
   }
+}
+
+function getPostgresPool() {
+  if (!globalThis[POOL_KEY]) {
+    globalThis[POOL_KEY] = new Pool({
+      connectionString: process.env.DATABASE_URL,
+      max: 3,
+      idleTimeoutMillis: 30000,
+      connectionTimeoutMillis: 8000,
+      allowExitOnIdle: true
+    });
+  }
+  return globalThis[POOL_KEY];
+}
+
+function runWithRequestContext(context, callback) {
+  return requestContext.run(context || {}, callback);
+}
+
+function currentAction() {
+  return requestContext.getStore()?.action || "";
 }
 
 async function readJsonFile() {
@@ -67,20 +92,27 @@ function normalizeDataShape(data) {
   return next;
 }
 
-async function withFileData(mutator) {
+async function withFileData(mutator, { readOnly = false } = {}) {
   const data = normalizeDataShape(await readJsonFile());
   const result = await mutator(data);
-  await writeJsonFile(data);
+  if (!readOnly) await writeJsonFile(data);
   return result;
 }
 
-async function loadPostgresData(client) {
+async function loadPostgresData(client, { includeHistory = true } = {}) {
+  const drawLogsPromise = includeHistory
+    ? client.query("select id, player_id, draw_count, result, created_at from draw_logs order by created_at")
+    : Promise.resolve({ rows: [] });
+  const eventLogsPromise = includeHistory
+    ? client.query("select id, player_id, action, detail, created_at from event_logs order by created_at")
+    : Promise.resolve({ rows: [] });
+
   const [playersResult, inventoryResult, drawLogsResult, qrClaimsResult, eventLogsResult, boothsResult] = await Promise.all([
     client.query("select id, name, team, gender, access_code, talent, exp, score, created_at, updated_at from players order by created_at"),
     client.query("select player_id, armor_code, grade, count from inventory"),
-    client.query("select id, player_id, draw_count, result, created_at from draw_logs order by created_at"),
+    drawLogsPromise,
     client.query("select id, player_id, qr_code, reward, created_at from qr_claims order by created_at"),
-    client.query("select id, player_id, action, detail, created_at from event_logs order by created_at"),
+    eventLogsPromise,
     client.query("select booth_id, status, player1_id, player2_id, player1_items, player2_items, player1_confirmed, player2_confirmed, updated_at, expires_at, completed_at from exchange_sessions")
   ]);
   const players = playersResult.rows;
@@ -286,13 +318,22 @@ async function savePostgresData(client, data) {
   }
 }
 
-async function withPostgresData(mutator) {
-  const pool = new Pool({ connectionString: process.env.DATABASE_URL });
-  const client = await pool.connect();
+async function withPostgresReadData(mutator, { includeHistory = false } = {}) {
+  const client = await getPostgresPool().connect();
+  try {
+    const data = await loadPostgresData(client, { includeHistory });
+    return await mutator(data);
+  } finally {
+    client.release();
+  }
+}
+
+async function withPostgresWriteData(mutator) {
+  const client = await getPostgresPool().connect();
   try {
     await client.query("begin isolation level serializable");
     await client.query("select pg_advisory_xact_lock($1)", [91324027]);
-    const data = await loadPostgresData(client);
+    const data = await loadPostgresData(client, { includeHistory: true });
     const result = await mutator(data);
     await savePostgresData(client, data);
     await client.query("commit");
@@ -304,7 +345,6 @@ async function withPostgresData(mutator) {
     throw error;
   } finally {
     client.release();
-    await pool.end();
   }
 }
 
@@ -316,7 +356,16 @@ function enqueueDataWork(task) {
 
 async function withData(mutator) {
   assertDataStoreReady();
-  return enqueueDataWork(() => (shouldUsePostgres() ? withPostgresData(mutator) : withFileData(mutator)));
+  const action = currentAction();
+  const readOnly = READ_ONLY_ACTIONS.has(action);
+  const includeHistory = action === "admin";
+
+  if (shouldUsePostgres()) {
+    if (readOnly) return withPostgresReadData(mutator, { includeHistory });
+    return enqueueDataWork(() => withPostgresWriteData(mutator));
+  }
+
+  return enqueueDataWork(() => withFileData(mutator, { readOnly }));
 }
 
 async function resetLocalData() {
@@ -327,6 +376,7 @@ module.exports = {
   DATA_FILE,
   assertDataStoreReady,
   resetLocalData,
+  runWithRequestContext,
   shouldUsePostgres,
   withData
 };
