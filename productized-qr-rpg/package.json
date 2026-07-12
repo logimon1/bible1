@@ -13,7 +13,7 @@
     "export:seed-sql": "node scripts/export-supabase-seed.js",
     "doctor": "node scripts/doctor.js",
     "rehearsal": "node scripts/rehearsal.js",
-    "check": "node --check public/app.js && node --check api/app.js && node --check server/api.js && node --check server/core.js && node --check server/store.js && node --check server/config.js && node --check scripts/dev-server.js && node --check scripts/smoke-test.js && node --check scripts/seed-demo.js && node --check scripts/export-supabase-seed.js && node --check scripts/doctor.js && node --check scripts/rehearsal.js"
+    "check": "node --check public/app.js && node --check api/app.js && node --check server/api.js && node --check server/core.js && node --check server/store.js && node --check server/config.js && node --check server/request-context.js && node --check scripts/dev-server.js && node --check scripts/smoke-test.js && node --check scripts/seed-demo.js && node --check scripts/export-supabase-seed.js && node --check scripts/doctor.js && node --check scripts/rehearsal.js"
   },
   "dependencies": {
     "pg": "^8.22.0",
