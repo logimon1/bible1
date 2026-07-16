@@ -1,0 +1,21 @@
+﻿code,group,label,route,url,file
+game-entry,navigation,게임 입장,/,https://current-retreat.vercel.app/,game-entry.png
+ranking,navigation,원정 랭킹,/ranking,https://current-retreat.vercel.app/ranking,ranking.png
+forest-entry,navigation,THE WAR 입장,/forest,https://current-retreat.vercel.app/forest,forest-entry.png
+team-merge,navigation,THE WAR 공동 체크인,/team/merge,https://current-retreat.vercel.app/team/merge,team-merge.png
+draw-1,draw,장비 1회 뽑기,/draw/1,https://current-retreat.vercel.app/draw/1,draw-1.png
+draw-2,draw,장비 2회 뽑기,/draw/2,https://current-retreat.vercel.app/draw/2,draw-2.png
+draw-3,draw,장비 3회 뽑기,/draw/3,https://current-retreat.vercel.app/draw/3,draw-3.png
+exchange-booth-1,exchange,교환소 1,/exchange/1,https://current-retreat.vercel.app/exchange/1,exchange-booth-1.png
+exchange-booth-2,exchange,교환소 2,/exchange/2,https://current-retreat.vercel.app/exchange/2,exchange-booth-2.png
+mission-judgment,reward,거짓의 마귀 · 판단력 미션,/mission/judgment,https://current-retreat.vercel.app/mission/judgment,mission-judgment.png
+mission-endurance,reward,낙심의 마귀 · 인내력 미션,/mission/endurance,https://current-retreat.vercel.app/mission/endurance,mission-endurance.png
+mission-speed,reward,추격의 마귀 · 스피드 미션,/mission/speed,https://current-retreat.vercel.app/mission/speed,mission-speed.png
+mission-teamwork,reward,분열의 마귀 · 협동력 미션,/mission/teamwork,https://current-retreat.vercel.app/mission/teamwork,mission-teamwork.png
+mission-intellect,reward,혼란의 마귀 · 지력 미션,/mission/intellect,https://current-retreat.vercel.app/mission/intellect,mission-intellect.png
+mission-power,reward,파괴의 마귀 · 힘 미션,/mission/power,https://current-retreat.vercel.app/mission/power,mission-power.png
+hidden-forest-cache-1,reward,숨겨진 보급품 1,/hidden/forest-cache-1,https://current-retreat.vercel.app/hidden/forest-cache-1,hidden-forest-cache-1.png
+hidden-forest-cache-2,reward,숨겨진 보급품 2,/hidden/forest-cache-2,https://current-retreat.vercel.app/hidden/forest-cache-2,hidden-forest-cache-2.png
+boss-forest,reward,전신갑주 최종 보급,/boss,https://current-retreat.vercel.app/boss,boss-forest.png
+teacher-admin,teacher,교사용 관리,/admin,https://current-retreat.vercel.app/admin,teacher-admin.png
+server-health,teacher,서버 연결 확인,/api/app?action=health,https://current-retreat.vercel.app/api/app?action=health,server-health.png

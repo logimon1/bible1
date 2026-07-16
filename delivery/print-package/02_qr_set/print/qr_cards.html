@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>QR 카드 세트</title>
+  <style>
+    @page { size: A4; margin: 12mm; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "Noto Sans KR", Arial, sans-serif; color: #2b2926; background: #f7f1df; }
+    h1, h2, h3 { margin: 0 0 10px; letter-spacing: 0; }
+    p { line-height: 1.55; margin: 6px 0; }
+    .sheet { max-width: 980px; margin: 0 auto; padding: 20px; }
+    .grid { display: grid; gap: 12px; }
+    .two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .card { background: #fffaf0; border: 2px solid #2b2926; border-radius: 8px; padding: 14px; page-break-inside: avoid; }
+    .badge { display: inline-block; padding: 4px 9px; border: 1px solid #2b2926; border-radius: 999px; background: #e9b64b; font-weight: 800; }
+    .muted { color: #6b6258; font-size: 12px; }
+    .qr { width: 120px; height: 120px; background: white; padding: 4px; border: 1px solid #2b2926; }
+    .cut { border: 1px dashed #777; }
+    table { width: 100%; border-collapse: collapse; background: #fffaf0; }
+    th, td { border: 1px solid #2b2926; padding: 8px; text-align: left; vertical-align: top; }
+    th { background: #e9dfc5; }
+    @media print {
+      body { background: white; }
+      .sheet { max-width: none; padding: 0; }
+      .no-print { display: none; }
+    }
+    
+  </style>
+</head>
+<body>
+  <main class="sheet"><h1>QR 카드 세트</h1><p class="no-print">브라우저 인쇄에서 A4, 배경 그래픽 켜기, 여백 기본값을 사용합니다.</p><section class="grid two"><article class="card cut">
+    <div class="badge">T</div>
+    <h2>모험 시작 튜토리얼</h2>
+    <p>학생 등록, 입장코드 확인, QR 진행법을 안내합니다.</p>
+    <p class="muted">에베소서 6:13 · both · opening</p>
+    <img class="qr" src="../svg/tutorial-entry.svg" alt="모험 시작 튜토리얼 QR">
+    <p class="muted">https://church-armor-rpg.example/</p>
+  </article>
+<article class="card cut">
+    <div class="badge">01</div>
+    <h2>진리 분별 미션</h2>
+    <p>확인할 수 있는 사실과 아직 확인하지 않은 설명을 구분하고, 말씀에 맞는 다음 행동을 정합니다.</p>
+    <p class="muted">에베소서 6:14 · both · stage1 · 1주차</p>
+    <img class="qr" src="../svg/mission-truth.svg" alt="진리 분별 미션 QR">
+    <p class="muted">https://church-armor-rpg.example/mission/truth</p>
+  </article>
+<article class="card cut">
+    <div class="badge">02</div>
+    <h2>의의 고백 미션</h2>
+    <p>나를 흔드는 말과 복음의 고백을 비교합니다.</p>
+    <p class="muted">에베소서 6:14 · monthly · week1 · 1주차</p>
+    <img class="qr" src="../svg/mission-righteousness.svg" alt="의의 고백 미션 QR">
+    <p class="muted">https://church-armor-rpg.example/mission/righteousness</p>
+  </article>
+<article class="card cut">
+    <div class="badge">03</div>
+    <h2>평안 전달 미션</h2>
+    <p>복음의 평안을 담은 격려 메시지를 전달합니다.</p>
+    <p class="muted">에베소서 6:15 · monthly · week2 · 2주차</p>
+    <img class="qr" src="../svg/mission-gospel.svg" alt="평안 전달 미션 QR">
+    <p class="muted">https://church-armor-rpg.example/mission/gospel</p>
+  </article>
+<article class="card cut">
+    <div class="badge">04</div>
+    <h2>믿음 선택 미션</h2>
+    <p>두려움 카드 앞에서 믿음의 선택을 고백합니다.</p>
+    <p class="muted">에베소서 6:16 · both · stage2 · 3주차</p>
+    <img class="qr" src="../svg/mission-faith.svg" alt="믿음 선택 미션 QR">
+    <p class="muted">https://church-armor-rpg.example/mission/faith</p>
+  </article>
+<article class="card cut">
+    <div class="badge">05</div>
+    <h2>구원의 확신 미션</h2>
+    <p>구원과 정체성에 대한 말씀 문장을 완성합니다.</p>
+    <p class="muted">에베소서 6:17 · monthly · week3 · 3주차</p>
+    <img class="qr" src="../svg/mission-salvation.svg" alt="구원의 확신 미션 QR">
+    <p class="muted">https://church-armor-rpg.example/mission/salvation</p>
+  </article>
+<article class="card cut">
+    <div class="badge">06</div>
+    <h2>말씀 적용 미션</h2>
+    <p>오늘의 선택에 적용할 말씀 구절을 찾고 결단합니다.</p>
+    <p class="muted">에베소서 6:17 · both · final · 4주차</p>
+    <img class="qr" src="../svg/mission-word.svg" alt="말씀 적용 미션 QR">
+    <p class="muted">https://church-armor-rpg.example/mission/word</p>
+  </article>
+<article class="card cut">
+    <div class="badge">H1</div>
+    <h2>숨겨진 숲 보급함</h2>
+    <p>현장 탐색 중 발견하는 보너스 QR입니다.</p>
+    <p class="muted">에베소서 6:13 · retreat · hidden</p>
+    <img class="qr" src="../svg/hidden-forest-cache-1.svg" alt="숨겨진 숲 보급함 QR">
+    <p class="muted">https://church-armor-rpg.example/hidden/forest-cache-1</p>
+  </article>
+<article class="card cut">
+    <div class="badge">H2</div>
+    <h2>숨겨진 말씀 조각</h2>
+    <p>말씀 조각을 찾는 보너스 QR입니다.</p>
+    <p class="muted">시편 119:105 · retreat · hidden</p>
+    <img class="qr" src="../svg/hidden-verse-cache-2.svg" alt="숨겨진 말씀 조각 QR">
+    <p class="muted">https://church-armor-rpg.example/hidden/verse-cache-2</p>
+  </article>
+<article class="card cut">
+    <div class="badge">E1</div>
+    <h2>교환소 1</h2>
+    <p>두 학생이 선생님 앞에서 장비를 교환합니다.</p>
+    <p class="muted">고린도전서 12:4 · retreat · exchange</p>
+    <img class="qr" src="../svg/exchange-booth-1.svg" alt="교환소 1 QR">
+    <p class="muted">https://church-armor-rpg.example/exchange/1</p>
+  </article>
+<article class="card cut">
+    <div class="badge">E2</div>
+    <h2>교환소 2</h2>
+    <p>병목을 줄이기 위한 두 번째 교환소입니다.</p>
+    <p class="muted">고린도전서 12:4 · retreat · exchange</p>
+    <img class="qr" src="../svg/exchange-booth-2.svg" alt="교환소 2 QR">
+    <p class="muted">https://church-armor-rpg.example/exchange/2</p>
+  </article>
+<article class="card cut">
+    <div class="badge">B</div>
+    <h2>최종 결단 미션</h2>
+    <p>전신갑주를 확인하고 마지막 결단을 고백합니다.</p>
+    <p class="muted">에베소서 6:13 · retreat · boss · 4주차</p>
+    <img class="qr" src="../svg/boss-forest.svg" alt="최종 결단 미션 QR">
+    <p class="muted">https://church-armor-rpg.example/boss</p>
+  </article></section></main>
+</body>
+</html>

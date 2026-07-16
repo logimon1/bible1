@@ -5,6 +5,7 @@ node_modules/
 .env.local
 .playwright-mcp/
 .codex-remote-attachments/
-assets/avatar/
-scripts/prepare-equipment-layer.ps1
-scripts/remove-magenta-background.ps1
+tmp/
+current-retreat/assets/avatar/
+current-retreat/scripts/prepare-equipment-layer.ps1
+current-retreat/scripts/remove-magenta-background.ps1

@@ -1,0 +1,58 @@
+{
+  "version": "2.0.0",
+  "status": "lesson01_master_v2",
+  "builtAt": "2026-07-13",
+  "lessonId": "lesson-01-truth",
+  "audience": "중1~고3",
+  "designSystem": "Korean youth Sunday-school editorial v2",
+  "referenceDocument": "DESIGN_V2_KR_REFERENCE.md",
+  "files": {
+    "student": "output/pdf/lesson01_student_B5_print.pdf",
+    "teacher": "output/pdf/lesson01_teacher_A4_office.pdf",
+    "cards": "output/pdf/lesson01_activity_cards_A4_duplex.pdf",
+    "homeConnection": "output/pdf/lesson01_home_connection_A6_print.pdf",
+    "slides": "output/pdf/lesson01_teacher_slides_16x9.pdf"
+  },
+  "pageCounts": {
+    "student": 8,
+    "teacher": 12,
+    "cards": 8,
+    "homeConnection": 2,
+    "slides": 10
+  },
+  "illustration": {
+    "effectivePpi": 300.1,
+    "generationMode": "Codex built-in image generation"
+  },
+  "illustrations": [
+    {
+      "role": "hero",
+      "path": "art/generated/lesson01_truth_editorial_v2.png",
+      "placedWidthMm": 84,
+      "effectivePpi": 309.6
+    },
+    {
+      "role": "listening-spot",
+      "path": "art/generated/lesson01_truth_listening_spot_v2.png",
+      "maxPlacedWidthMm": 130,
+      "effectivePpi": 300.1
+    }
+  ],
+  "qrPolicy": {
+    "embedded": false,
+    "reason": "실제 교회별 DELIVERY_BASE_URL 확정 전 가짜 QR과 내부 미션 ID를 인쇄물에 노출하지 않음",
+    "deliveryMethod": "교사가 실제 납품 URL로 생성한 별도 미션 QR 카드 또는 종이 완료표를 제시"
+  },
+  "personalizationRequired": [
+    "교회명·부서명·담당자",
+    "교회 사용 성경 번역본",
+    "실제 DELIVERY_BASE_URL로 생성한 미션 QR 카드",
+    "교회 보호 담당자와 비상 절차"
+  ],
+  "printNotes": [
+    "학생책 B5와 가정연계 A6는 3mm 도련과 TrimBox를 포함합니다.",
+    "활동카드 1~4쪽은 A4 100% 양면 긴 변 넘김, 5~8쪽은 A4 100% 단면 출력입니다.",
+    "분류판에는 실제 63×88mm 카드 네 장을 놓을 수 있습니다.",
+    "슬라이드는 16:9, 10장으로 구성하며 핵심 본문은 후방 투사를 고려해 크게 배치했습니다."
+  ]
+}

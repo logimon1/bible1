@@ -1,0 +1,17 @@
+{
+  "name": "armor-qr-rpg-delivery-print-package",
+  "version": "0.1.0",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "build": "node scripts/build-package.js && node scripts/generate-pdfs.js && npm run build:lesson01",
+    "build:lesson01": "node scripts/textbook/run-python.js 14_textbook_set/scripts/build_lesson01_v2.py",
+    "verify": "node scripts/verify-package.js && npm run verify:lesson01",
+    "verify:lesson01": "node scripts/textbook/run-python.js 14_textbook_set/scripts/verify_lesson01.py",
+    "check": "npm run build && npm run verify"
+  },
+  "dependencies": {
+    "pdfkit": "^0.19.1",
+    "qrcode": "^1.5.4"
+  }
+}

@@ -1,0 +1,162 @@
+[
+  {
+    "code": "game-entry",
+    "group": "navigation",
+    "label": "게임 입장",
+    "route": "/",
+    "url": "https://current-retreat.vercel.app/",
+    "file": "game-entry.png"
+  },
+  {
+    "code": "ranking",
+    "group": "navigation",
+    "label": "원정 랭킹",
+    "route": "/ranking",
+    "url": "https://current-retreat.vercel.app/ranking",
+    "file": "ranking.png"
+  },
+  {
+    "code": "forest-entry",
+    "group": "navigation",
+    "label": "THE WAR 입장",
+    "route": "/forest",
+    "url": "https://current-retreat.vercel.app/forest",
+    "file": "forest-entry.png"
+  },
+  {
+    "code": "team-merge",
+    "group": "navigation",
+    "label": "THE WAR 공동 체크인",
+    "route": "/team/merge",
+    "url": "https://current-retreat.vercel.app/team/merge",
+    "file": "team-merge.png"
+  },
+  {
+    "code": "draw-1",
+    "group": "draw",
+    "label": "장비 1회 뽑기",
+    "route": "/draw/1",
+    "url": "https://current-retreat.vercel.app/draw/1",
+    "file": "draw-1.png"
+  },
+  {
+    "code": "draw-2",
+    "group": "draw",
+    "label": "장비 2회 뽑기",
+    "route": "/draw/2",
+    "url": "https://current-retreat.vercel.app/draw/2",
+    "file": "draw-2.png"
+  },
+  {
+    "code": "draw-3",
+    "group": "draw",
+    "label": "장비 3회 뽑기",
+    "route": "/draw/3",
+    "url": "https://current-retreat.vercel.app/draw/3",
+    "file": "draw-3.png"
+  },
+  {
+    "code": "exchange-booth-1",
+    "group": "exchange",
+    "label": "교환소 1",
+    "route": "/exchange/1",
+    "url": "https://current-retreat.vercel.app/exchange/1",
+    "file": "exchange-booth-1.png"
+  },
+  {
+    "code": "exchange-booth-2",
+    "group": "exchange",
+    "label": "교환소 2",
+    "route": "/exchange/2",
+    "url": "https://current-retreat.vercel.app/exchange/2",
+    "file": "exchange-booth-2.png"
+  },
+  {
+    "code": "mission-judgment",
+    "group": "reward",
+    "label": "거짓의 마귀 · 판단력 미션",
+    "route": "/mission/judgment",
+    "url": "https://current-retreat.vercel.app/mission/judgment",
+    "file": "mission-judgment.png"
+  },
+  {
+    "code": "mission-endurance",
+    "group": "reward",
+    "label": "낙심의 마귀 · 인내력 미션",
+    "route": "/mission/endurance",
+    "url": "https://current-retreat.vercel.app/mission/endurance",
+    "file": "mission-endurance.png"
+  },
+  {
+    "code": "mission-speed",
+    "group": "reward",
+    "label": "추격의 마귀 · 스피드 미션",
+    "route": "/mission/speed",
+    "url": "https://current-retreat.vercel.app/mission/speed",
+    "file": "mission-speed.png"
+  },
+  {
+    "code": "mission-teamwork",
+    "group": "reward",
+    "label": "분열의 마귀 · 협동력 미션",
+    "route": "/mission/teamwork",
+    "url": "https://current-retreat.vercel.app/mission/teamwork",
+    "file": "mission-teamwork.png"
+  },
+  {
+    "code": "mission-intellect",
+    "group": "reward",
+    "label": "혼란의 마귀 · 지력 미션",
+    "route": "/mission/intellect",
+    "url": "https://current-retreat.vercel.app/mission/intellect",
+    "file": "mission-intellect.png"
+  },
+  {
+    "code": "mission-power",
+    "group": "reward",
+    "label": "파괴의 마귀 · 힘 미션",
+    "route": "/mission/power",
+    "url": "https://current-retreat.vercel.app/mission/power",
+    "file": "mission-power.png"
+  },
+  {
+    "code": "hidden-forest-cache-1",
+    "group": "reward",
+    "label": "숨겨진 보급품 1",
+    "route": "/hidden/forest-cache-1",
+    "url": "https://current-retreat.vercel.app/hidden/forest-cache-1",
+    "file": "hidden-forest-cache-1.png"
+  },
+  {
+    "code": "hidden-forest-cache-2",
+    "group": "reward",
+    "label": "숨겨진 보급품 2",
+    "route": "/hidden/forest-cache-2",
+    "url": "https://current-retreat.vercel.app/hidden/forest-cache-2",
+    "file": "hidden-forest-cache-2.png"
+  },
+  {
+    "code": "boss-forest",
+    "group": "reward",
+    "label": "전신갑주 최종 보급",
+    "route": "/boss",
+    "url": "https://current-retreat.vercel.app/boss",
+    "file": "boss-forest.png"
+  },
+  {
+    "code": "teacher-admin",
+    "group": "teacher",
+    "label": "교사용 관리",
+    "route": "/admin",
+    "url": "https://current-retreat.vercel.app/admin",
+    "file": "teacher-admin.png"
+  },
+  {
+    "code": "server-health",
+    "group": "teacher",
+    "label": "서버 연결 확인",
+    "route": "/api/app?action=health",
+    "url": "https://current-retreat.vercel.app/api/app?action=health",
+    "file": "server-health.png"
+  }
+]

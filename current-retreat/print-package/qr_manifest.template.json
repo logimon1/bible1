@@ -1,0 +1,162 @@
+[
+  {
+    "code": "game-entry",
+    "group": "navigation",
+    "label": "게임 입장",
+    "subtitle": "이름과 조를 입력하고 원정 시작",
+    "route": "/",
+    "badge": "START"
+  },
+  {
+    "code": "ranking",
+    "group": "navigation",
+    "label": "원정 랭킹",
+    "subtitle": "친구들의 장비 전투력 확인",
+    "route": "/ranking",
+    "badge": "RANK"
+  },
+  {
+    "code": "forest-entry",
+    "group": "navigation",
+    "label": "THE WAR 입장",
+    "subtitle": "영적 전쟁과 여섯 가지 미션 확인",
+    "route": "/forest",
+    "badge": "THE WAR"
+  },
+  {
+    "code": "team-merge",
+    "group": "navigation",
+    "label": "THE WAR 공동 체크인",
+    "subtitle": "파티원 모두 같은 QR 스캔 · 전원 완료 후 역할 배분",
+    "route": "/team/merge",
+    "badge": "CHECK-IN"
+  },
+  {
+    "code": "draw-1",
+    "group": "draw",
+    "label": "장비 1회 뽑기",
+    "subtitle": "무작위 장비 뽑기 · 반복 사용",
+    "route": "/draw/1",
+    "badge": "DRAW 1"
+  },
+  {
+    "code": "draw-2",
+    "group": "draw",
+    "label": "장비 2회 뽑기",
+    "subtitle": "무작위 장비 뽑기 · 반복 사용",
+    "route": "/draw/2",
+    "badge": "DRAW 2"
+  },
+  {
+    "code": "draw-3",
+    "group": "draw",
+    "label": "장비 3회 뽑기",
+    "subtitle": "무작위 장비 뽑기 · 반복 사용",
+    "route": "/draw/3",
+    "badge": "DRAW 3"
+  },
+  {
+    "code": "exchange-booth-1",
+    "group": "exchange",
+    "label": "교환소 1",
+    "subtitle": "두 학생이 함께 스캔해 장비 교환",
+    "route": "/exchange/1",
+    "badge": "EXCHANGE 1"
+  },
+  {
+    "code": "exchange-booth-2",
+    "group": "exchange",
+    "label": "교환소 2",
+    "subtitle": "두 학생이 함께 스캔해 장비 교환",
+    "route": "/exchange/2",
+    "badge": "EXCHANGE 2"
+  },
+  {
+    "code": "mission-judgment",
+    "group": "reward",
+    "label": "거짓의 마귀 · 판단력 미션",
+    "subtitle": "완료 보상 · 장비 1회 뽑기",
+    "route": "/mission/judgment",
+    "badge": "MISSION 01"
+  },
+  {
+    "code": "mission-endurance",
+    "group": "reward",
+    "label": "낙심의 마귀 · 인내력 미션",
+    "subtitle": "완료 보상 · 장비 1회 뽑기",
+    "route": "/mission/endurance",
+    "badge": "MISSION 02"
+  },
+  {
+    "code": "mission-speed",
+    "group": "reward",
+    "label": "추격의 마귀 · 스피드 미션",
+    "subtitle": "완료 보상 · 장비 1회 뽑기",
+    "route": "/mission/speed",
+    "badge": "MISSION 03"
+  },
+  {
+    "code": "mission-teamwork",
+    "group": "reward",
+    "label": "분열의 마귀 · 협동력 미션",
+    "subtitle": "완료 보상 · 장비 1회 뽑기",
+    "route": "/mission/teamwork",
+    "badge": "MISSION 04"
+  },
+  {
+    "code": "mission-intellect",
+    "group": "reward",
+    "label": "혼란의 마귀 · 지력 미션",
+    "subtitle": "완료 보상 · 장비 1회 뽑기",
+    "route": "/mission/intellect",
+    "badge": "MISSION 05"
+  },
+  {
+    "code": "mission-power",
+    "group": "reward",
+    "label": "파괴의 마귀 · 힘 미션",
+    "subtitle": "완료 보상 · 장비 1회 뽑기",
+    "route": "/mission/power",
+    "badge": "MISSION 06"
+  },
+  {
+    "code": "hidden-forest-cache-1",
+    "group": "reward",
+    "label": "숨겨진 보급품 1",
+    "subtitle": "히든 보상 · 장비 2회 뽑기",
+    "route": "/hidden/forest-cache-1",
+    "badge": "HIDDEN 01"
+  },
+  {
+    "code": "hidden-forest-cache-2",
+    "group": "reward",
+    "label": "숨겨진 보급품 2",
+    "subtitle": "히든 보상 · 장비 2회 뽑기",
+    "route": "/hidden/forest-cache-2",
+    "badge": "HIDDEN 02"
+  },
+  {
+    "code": "boss-forest",
+    "group": "reward",
+    "label": "전신갑주 최종 보급",
+    "subtitle": "최종 보상 · 장비 3회 뽑기",
+    "route": "/boss",
+    "badge": "FINAL"
+  },
+  {
+    "code": "teacher-admin",
+    "group": "teacher",
+    "label": "교사용 관리",
+    "subtitle": "PIN 입력 후 학생·교환소 운영",
+    "route": "/admin",
+    "badge": "ADMIN"
+  },
+  {
+    "code": "server-health",
+    "group": "teacher",
+    "label": "서버 연결 확인",
+    "subtitle": "ready · postgres · writable 확인",
+    "route": "/api/app?action=health",
+    "badge": "SERVER"
+  }
+]

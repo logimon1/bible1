@@ -6,50 +6,53 @@ on:
   pull_request:
 
 jobs:
-  legacy-root:
-    name: Legacy root MVP
+  current-retreat-app:
+    name: Current retreat app
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: current-retreat
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: package-lock.json
+          cache-dependency-path: current-retreat/package-lock.json
       - run: npm ci
       - run: npm run check
       - run: npm run smoke
 
-  productized-app:
-    name: Productized app
+  delivery-app:
+    name: Delivery app
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: productized-qr-rpg
+        working-directory: delivery/app
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: productized-qr-rpg/package-lock.json
+          cache-dependency-path: delivery/app/package-lock.json
       - run: npm ci
       - run: npm run doctor
       - run: npm run check
       - run: npm run smoke
 
-  delivery-package:
-    name: Delivery package
+  delivery-print-package:
+    name: Delivery print package
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: extra
+        working-directory: delivery/print-package
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: extra/package-lock.json
+          cache-dependency-path: delivery/print-package/package-lock.json
       - run: npm ci
       - run: npm run check

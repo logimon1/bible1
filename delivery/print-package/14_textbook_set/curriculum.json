@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "productId": "armor-rpg-youth-4week",
+  "title": "중·고등부 4주 전신갑주 공과",
+  "audience": {
+    "minGrade": "middle-1",
+    "maxGrade": "high-3",
+    "groupSize": "6-12",
+    "lessonMinutes": 55
+  },
+  "biblePolicy": {
+    "passage": "에베소서 6:10-18",
+    "translation": "발주 교회와 확정",
+    "fullTextIncluded": false
+  },
+  "lessons": [
+    {
+      "id": "lesson-01-truth",
+      "week": 1,
+      "title": "진리로 중심을 잡아라",
+      "passage": "에베소서 6:10-14의 진리로 허리를 동여매고까지",
+      "equipment": ["belt"],
+      "missionCodes": ["mission-truth"],
+      "keySentence": "주님의 능력 안에서 진리를 붙들면, 성급히 단정하지 않고 사랑으로 다음 행동을 선택할 수 있습니다.",
+      "weeklyPractice": "다음 모임 전까지 가능한 날에 세 번 이상 사실-감정과 의미-아직 모르는 것-다음 행동을 기록합니다.",
+      "status": "master_v2_approved",
+      "approvedAt": "2026-07-13"
+    },
+    {
+      "id": "lesson-02-righteousness-peace",
+      "week": 2,
+      "title": "의로 마음을 지키고 평안으로 걸어라",
+      "passage": "에베소서 6:14하-15",
+      "equipment": ["breastplate", "shoes"],
+      "missionCodes": ["mission-righteousness", "mission-gospel"],
+      "keySentence": "그리스도 안에서 받은 은혜로 마음을 지키고 그 평안을 다른 사람에게 전합니다.",
+      "weeklyPractice": "한 사람에게 구체적이고 진실한 격려를 전합니다."
+    },
+    {
+      "id": "lesson-03-faith-salvation",
+      "week": 3,
+      "title": "믿음으로 막고 구원을 기억하라",
+      "passage": "에베소서 6:16-17상",
+      "equipment": ["shield", "helmet"],
+      "missionCodes": ["mission-faith", "mission-salvation"],
+      "keySentence": "두려움 속에서도 하나님의 성품과 구원의 약속을 붙들고 다음 한 걸음을 선택합니다.",
+      "weeklyPractice": "믿음의 다음 행동 하나와 도움을 청할 사람 한 명을 정합니다."
+    },
+    {
+      "id": "lesson-04-word-prayer",
+      "week": 4,
+      "title": "말씀과 기도로 끝까지 서라",
+      "passage": "에베소서 6:17하-18",
+      "equipment": ["sword"],
+      "missionCodes": ["mission-word", "boss-forest"],
+      "keySentence": "말씀으로 순종의 길을 찾고 기도로 전신갑주 전체를 살아 냅니다.",
+      "weeklyPractice": "7일 동안 말씀-행동-기도를 한 줄씩 기록합니다."
+    }
+  ]
+}
