@@ -1,6 +1,7 @@
 const {
   ARMOR,
   DRAW_COUNTS,
+  EQUIPMENT_POWER_VALUES,
   FOREST_TRIALS,
   QR_REWARDS,
   addItem,
@@ -308,6 +309,44 @@ function finalizeTeamRoster(data, player) {
   });
 }
 
+function rosterMembershipLocked(setting) {
+  return Boolean(
+    (setting.warScannedPlayerIds || []).length
+    || setting.warScanCompletedAt
+    || setting.warAssemblySnapshot
+    || Object.keys(setting.warRoleAssignments || {}).length
+    || setting.warRolesCompletedAt
+  );
+}
+
+function refreshRosterAfterMembershipChange(data, teamKey, teamName, current, members, actorId, action) {
+  const leader = members.find((member) => member.id === current.leaderPlayerId) || members[0] || null;
+  const remainsFinalized = members.length >= 4 && members.length <= 6;
+  data.teamSettings = data.teamSettings || {};
+  data.teamSettings[teamKey] = {
+    ...current,
+    leaderPlayerId: leader?.id || null,
+    rosterFinalized: remainsFinalized,
+    rosterMemberIds: remainsFinalized ? members.map((member) => member.id) : [],
+    rosterFinalizedAt: remainsFinalized ? nowIso() : null,
+    warSessionId: remainsFinalized ? id("war") : null,
+    warScannedPlayerIds: [],
+    warScanCompletedAt: null,
+    warAssemblySnapshot: null,
+    warRoleAssignments: {},
+    warRolesCompletedAt: null
+  };
+  createEvent(data, actorId, action, {
+    teamKey,
+    team: teamName,
+    memberIds: members.map((member) => member.id),
+    memberCount: members.length,
+    rosterFinalized: remainsFinalized,
+    leaderPlayerId: leader?.id || null
+  });
+  return data.teamSettings[teamKey];
+}
+
 function adminReopenTeamRoster(data, teamKey) {
   const normalizedKey = normalizedTeamKey(teamKey);
   if (!normalizedKey) throw new Error("다시 열 조를 선택해주세요.");
@@ -335,8 +374,8 @@ function leaveTeam(data, player) {
   const teamKey = normalizedTeamKey(player.team);
   if (!teamKey) throw new Error("현재 소속된 조가 없습니다.");
   const current = teamSettingFor(data, player.team);
-  if (current.rosterFinalized) {
-    throw new Error("조 명단이 확정된 뒤에는 탈퇴할 수 없습니다. 편성 오류는 교사에게 문의해주세요.");
+  if (current.rosterFinalized && rosterMembershipLocked(current)) {
+    throw new Error("THE WAR QR 스캔이 시작된 뒤에는 탈퇴할 수 없습니다. 교사에게 문의해주세요.");
   }
 
   const formerTeam = player.team;
@@ -344,10 +383,14 @@ function leaveTeam(data, player) {
   const nextLeader = remainingMembers.find((member) => member.id === current.leaderPlayerId) || remainingMembers[0] || null;
   data.teamSettings = data.teamSettings || {};
   if (nextLeader) {
-    data.teamSettings[teamKey] = {
-      ...current,
-      leaderPlayerId: nextLeader.id
-    };
+    if (current.rosterFinalized) {
+      refreshRosterAfterMembershipChange(data, teamKey, formerTeam, current, remainingMembers, player.id, "team_member_left_after_finalization");
+    } else {
+      data.teamSettings[teamKey] = {
+        ...current,
+        leaderPlayerId: nextLeader.id
+      };
+    }
   } else {
     delete data.teamSettings[teamKey];
   }
@@ -360,7 +403,12 @@ function leaveTeam(data, player) {
     remainingMemberIds: remainingMembers.map((member) => member.id),
     nextLeaderPlayerId: nextLeader?.id || null
   });
-  return { formerTeam, remainingMemberCount: remainingMembers.length, nextLeaderName: nextLeader?.name || "" };
+  return {
+    formerTeam,
+    remainingMemberCount: remainingMembers.length,
+    nextLeaderName: nextLeader?.name || "",
+    rosterFinalized: Boolean(data.teamSettings?.[teamKey]?.rosterFinalized)
+  };
 }
 
 function assertWarOpen() {
@@ -704,12 +752,42 @@ function assertWarRewardOpen(reward) {
   assertWarOpen();
 }
 
+function missionReadiness(data, player, reward) {
+  if (!reward || reward.type !== "mission" || !player) return null;
+  const summary = teamSummary(data, player);
+  const members = summary?.members || [];
+  const requiredPower = members.length * EQUIPMENT_POWER_VALUES.B;
+  const unpreparedMembers = members
+    .filter((member) => Number(member.equipmentPower || 0) < EQUIPMENT_POWER_VALUES.B)
+    .map((member) => ({ id: member.id, name: member.name, equipmentPower: Number(member.equipmentPower || 0) }));
+  const currentPower = Number(summary?.character?.equipmentPower || 0);
+  const qualified = members.length > 0 && unpreparedMembers.length === 0 && currentPower >= requiredPower;
+  return {
+    qualified,
+    currentPower,
+    requiredPower,
+    unpreparedMembers,
+    penalty: qualified ? null : {
+      title: "전원 얼차려 · 전투 자세 10초",
+      instruction: "전원이 안전선 안에서 전투 자세를 10초 유지한 뒤 미션을 시작하세요.",
+      alternative: "통증·부상·컨디션 이슈가 있는 학생은 ‘진리로 맞선다’ 구호 10회로 대체합니다."
+    }
+  };
+}
+
 function assertWarTeamReady(data, player, reward) {
   if (!reward || !["mission", "boss"].includes(reward.type)) return;
   if (!player) throw new Error("먼저 조원으로 로그인해주세요.");
   const summary = teamSummary(data, player);
   if (!summary?.war?.allScanned) throw new Error("모든 조원이 THE WAR QR 스캔을 마쳐야 합니다.");
   if (!summary?.war?.rolesComplete) throw new Error("6개 파트의 담당을 모두 정한 뒤 미션에 도전하세요.");
+  if (reward.type === "mission") {
+    const assignment = summary.war.assignments.find((item) => item.armor === reward.armor);
+    if (!assignment?.playerId) throw new Error("이 미션의 담당자를 먼저 배정해주세요.");
+    if (assignment.playerId !== player.id) {
+      throw new Error(`${assignment.playerName || "담당 조원"}만 ${reward.title} QR을 스캔할 수 있습니다.`);
+    }
+  }
 }
 
 function grantRandomDraws(data, player, count) {
@@ -866,8 +944,10 @@ async function runAction(action, body, query) {
       const team = validatePlayerText(body.team, "조 이름", 12);
       const partyMode = ["create", "join"].includes(String(body.partyMode || "")) ? String(body.partyMode) : "auto";
       let player = findPlayerByIdentity(data, { name, team });
+      let existingTeamMember = null;
+      let joiningFinalizedTeam = false;
       if (!player) {
-        const existingTeamMember = data.players.find((member) => normalizedTeamKey(member.team) === normalizedTeamKey(team));
+        existingTeamMember = data.players.find((member) => normalizedTeamKey(member.team) === normalizedTeamKey(team));
         if (partyMode === "create" && existingTeamMember) {
           throw new Error("이미 존재하는 조입니다. 조 참가를 눌러주세요.");
         }
@@ -875,7 +955,11 @@ async function runAction(action, body, query) {
           throw new Error("조를 찾을 수 없습니다. 이름을 확인하거나 새 조를 만들어주세요.");
         }
         if (existingTeamMember && teamSummary(data, existingTeamMember).rosterFinalized) {
-          throw new Error("이미 구성원이 확정된 조입니다. 조명을 확인하거나 선생님에게 문의해주세요.");
+          const setting = teamSettingFor(data, existingTeamMember.team);
+          if (rosterMembershipLocked(setting)) {
+            throw new Error("THE WAR QR 스캔이 시작된 조에는 새로 참가할 수 없습니다. 교사에게 문의해주세요.");
+          }
+          joiningFinalizedTeam = true;
         }
         if (existingTeamMember && allTeamMembersFor(data, existingTeamMember).length >= 6) {
           throw new Error("이 조는 최대 인원 6명이 모두 참가했습니다. 조명을 확인하거나 선생님에게 문의해주세요.");
@@ -905,6 +989,18 @@ async function runAction(action, body, query) {
         }
       } else {
         createEvent(data, player.id, "player_resumed", { team: player.team });
+      }
+      if (joiningFinalizedTeam && existingTeamMember) {
+        const setting = teamSettingFor(data, existingTeamMember.team);
+        refreshRosterAfterMembershipChange(
+          data,
+          normalizedTeamKey(team),
+          team,
+          setting,
+          allTeamMembersFor(data, player),
+          player.id,
+          "team_member_recruited_after_finalization"
+        );
       }
       return statePayload(data, player);
     }
@@ -949,6 +1045,7 @@ async function runAction(action, body, query) {
       return {
         ...statePayload(data, player),
         qrReward: publicQrReward(reward),
+        missionReadiness: missionReadiness(data, player, reward),
         claimed: reward.repeatable ? false : Boolean(claim),
         claim: reward.repeatable ? null : claim
       };
@@ -985,6 +1082,7 @@ async function runAction(action, body, query) {
         return {
           ...statePayload(data, player),
           qrReward: publicQrReward(reward),
+          missionReadiness: missionReadiness(data, player, reward),
           claimed: true,
           alreadyClaimed: true,
           claim: existing,
@@ -1007,7 +1105,7 @@ async function runAction(action, body, query) {
       }
       data.drawLogs.push({ id: id("draw"), playerId: player.id, drawCount: results.length, result: { source: "qr", qrCode: reward.code, requestedCount: drawCount, results, promotions, fullSetComplete }, createdAt: nowIso() });
       createEvent(data, player.id, "qr_claim", { qrCode: reward.code, reward: reward.reward, requestedCount: drawCount, count: results.length, results, promotions, fullSetComplete });
-      return { ...statePayload(data, player), qrReward: publicQrReward(reward), claimed: !reward.repeatable, repeatable: Boolean(reward.repeatable), claim, results, promotions, fullSetComplete };
+      return { ...statePayload(data, player), qrReward: publicQrReward(reward), missionReadiness: missionReadiness(data, player, reward), claimed: !reward.repeatable, repeatable: Boolean(reward.repeatable), claim, results, promotions, fullSetComplete };
     }
 
     if (action === "ranking") {

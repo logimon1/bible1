@@ -213,6 +213,15 @@ async function testFiveMemberWarFlow(players) {
   );
   assert.ok(ready.team.war.members.every((member) => member.assignedArmorCodes.length >= 1 && member.assignedArmorCodes.length <= 2));
   await assert.rejects(
+    () => call("qr-state", { playerId: second.id, code: "mission-judgment" }),
+    /QR을 스캔할 수 있습니다/
+  );
+  const readiness = await call("qr-state", { playerId: first.id, code: "mission-judgment" });
+  assert.equal(readiness.missionReadiness.qualified, false);
+  assert.equal(readiness.missionReadiness.requiredPower, 50);
+  assert.equal(readiness.missionReadiness.unpreparedMembers.length, 5);
+  assert.match(readiness.missionReadiness.penalty.title, /전원 얼차려/);
+  await assert.rejects(
     () => call("team-war-role", { playerId: first.id, armorCode: "belt", selected: false }),
     /배분이 완료/
   );
@@ -254,10 +263,12 @@ async function createAndCompleteTeam(teamName, memberCount) {
   assertWarSystemShape(finalizedRoster);
   const resumedAfterRoster = await call("create-player", { name: `${teamName}-1`, team: teamName, gender: "male" });
   assert.equal(resumedAfterRoster.me.id, members[0].id);
-  await assert.rejects(
-    () => call("create-player", { name: `${teamName}-late`, team: teamName, gender: "male" }),
-    /명단|확정/
-  );
+  if (memberCount === 6) {
+    await assert.rejects(
+      () => call("create-player", { name: `${teamName}-late`, team: teamName, gender: "male" }),
+      /최대 인원|6명/
+    );
+  }
 
   const firstDraw = await call("claim-qr", { playerId: members[0].id, code: "draw-3" });
   assert.ok(firstDraw.results.length >= 1 && firstDraw.results.length <= 3);
@@ -326,6 +337,14 @@ async function testRosterLifecycle() {
   assert.equal(fourMemberRoster.team.memberCount, 4);
   assert.equal(fourMemberRoster.team.rosterFinalized, true);
   assertWarSystemShape(fourMemberRoster);
+  const recruited = (await call("create-player", { name: "RosterFlow-5", team: "RosterFlow", partyMode: "join" })).me;
+  const afterRecruit = await call("team-state", { playerId: players[0].id });
+  assert.equal(afterRecruit.team.memberCount, 5);
+  assert.equal(afterRecruit.team.rosterFinalized, true, "THE WAR 스캔 전에는 확정된 조도 영입할 수 있어야 합니다.");
+  assert.equal(afterRecruit.team.war.scannedCount, 0);
+  const recruitLeave = await call("leave-team", { playerId: recruited.id });
+  assert.equal(recruitLeave.remainingMemberCount, 4);
+  assert.equal(recruitLeave.rosterFinalized, true, "4명 이상이면 탈퇴 뒤에도 조 확정 상태를 유지해야 합니다.");
   const immediateDraw = await call("draw", { playerId: players[0].id, count: 1 });
   assert.equal(immediateDraw.results.length, 1);
   assertWarSystemShape(immediateDraw);
@@ -363,7 +382,7 @@ async function testRosterLifecycle() {
   );
   await assert.rejects(
     () => call("leave-team", { playerId: players[0].id }),
-    /확정된 뒤에는 탈퇴할 수 없습니다/
+    /THE WAR QR 스캔이 시작된 뒤에는 탈퇴할 수 없습니다/
   );
 
   const fullTeam = [];
@@ -376,7 +395,7 @@ async function testRosterLifecycle() {
   );
   const fullRoster = await call("team-roster-finalize", { playerId: fullTeam[0].id });
   assert.equal(fullRoster.team.memberCount, 6);
-  return [...players, ...fullTeam];
+  return [...players, recruited, ...fullTeam];
 }
 
 async function testVoluntaryPartyLeave() {
@@ -411,7 +430,22 @@ async function testVoluntaryPartyLeave() {
   });
   assert.equal(secondRejoined.me.id, players[1].id);
   assert.equal(secondRejoined.me.team, "LeaveNew2");
-  return players;
+
+  const changingRoster = [];
+  for (let index = 1; index <= 4; index += 1) {
+    changingRoster.push((await call("create-player", { name: `RecruitFlow-${index}`, team: "RecruitFlow" })).me);
+  }
+  await call("team-roster-finalize", { playerId: changingRoster[0].id });
+  const confirmedLeave = await call("leave-team", { playerId: changingRoster[0].id });
+  assert.equal(confirmedLeave.remainingMemberCount, 3);
+  assert.equal(confirmedLeave.rosterFinalized, false, "4명 미만이 되면 다시 조 확정 대기 상태여야 합니다.");
+  const replacement = (await call("create-player", { name: "RecruitFlow-5", team: "RecruitFlow", partyMode: "join" })).me;
+  const awaitingRefinalize = await call("team-state", { playerId: changingRoster[1].id });
+  assert.equal(awaitingRefinalize.team.memberCount, 4);
+  assert.equal(awaitingRefinalize.team.rosterFinalized, false);
+  const refinalized = await call("team-roster-finalize", { playerId: changingRoster[1].id });
+  assert.equal(refinalized.team.rosterFinalized, true);
+  return [...players, ...changingRoster, replacement];
 }
 
 async function testAdminEmergencyRosterReopen() {
@@ -851,7 +885,7 @@ async function run() {
     assert.match(scriptText, /<span>조 이름<\/span><strong>“\$\{escapeHtml\(partyName\)\}”<\/strong><span>을 입력하세요<\/span>/);
     assert.doesNotMatch(scriptText, /조원들이 입력할 조 이름|로그인 화면의 <b>조 이름<\/b>|시작하려면 \$\{remaining\}명이 더 필요해요|party-lobby-limits/);
     assert.doesNotMatch(scriptText, /partyLobbySlotsHtml/);
-    assert.match(scriptText, /확정 후에는 (파티장도|조장도) 취소하거나 (파티원을|조원을) 바꿀 수 없습니다/);
+    assert.match(scriptText, /THE WAR QR 스캔 전까지는 탈퇴·영입이 가능합니다/);
     assert.doesNotMatch(scriptText, /담당 장비를 나눠 맡으세요|내 장비를 선택하세요|이 배정으로 확정합니다/);
     assert.match(scriptText, /server-connection-banner/);
     assert.match(scriptText, /team-roster-finalize/);

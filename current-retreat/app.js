@@ -62,6 +62,7 @@ const state = {
   qrClaimInFlight: false,
   exchangeActionInFlight: false,
   startedMissionCode: null,
+  missionReadiness: null,
   teamSetupInFlight: false,
   warRoleInFlight: false,
   teamPollSignature: "",
@@ -1113,7 +1114,7 @@ function finalizeTeamRoster() {
   if (!state.team?.isLeader) return toast("조장만 구성을 확정할 수 있어요.", "error");
   if (memberCount < 4 || memberCount > 6) return toast("조는 4~6명일 때 확정할 수 있어요.", "error");
   const memberNames = (state.team?.members || []).map((member) => member.name).join(", ");
-  if (!window.confirm(`조원 ${memberCount}명을 확정할까요?\n\n${memberNames}\n\n확정 후에는 조장도 취소하거나 조원을 바꿀 수 없습니다. 오타·편성 오류는 교사에게 요청하세요.`)) return;
+  if (!window.confirm(`조원 ${memberCount}명을 확정할까요?\n\n${memberNames}\n\nTHE WAR QR 스캔 전까지는 탈퇴·영입이 가능합니다. 조원이 바뀌면 스캔과 역할 배정은 다시 시작됩니다.`)) return;
   runTeamSetupAction("team-roster-finalize", `${memberCount}명 조 결성 완료!`, { goParty: true, sound: "start" });
 }
 
@@ -1123,11 +1124,17 @@ function claimTeamLeader() {
 }
 
 async function leaveTeam() {
-  if (!state.me || state.team?.rosterFinalized) {
-    return toast("조 명단이 확정된 뒤에는 탈퇴할 수 없습니다.", "error");
+  const warStarted = Number(state.team?.war?.scannedCount || 0) > 0
+    || Boolean(state.team?.war?.scanCompletedAt)
+    || Number(state.team?.war?.assignedCount || 0) > 0;
+  if (!state.me || warStarted) {
+    return toast("THE WAR QR 스캔이 시작된 뒤에는 탈퇴할 수 없습니다.", "error");
   }
   const teamName = state.me.team || "현재 조";
-  if (!window.confirm(`“${teamName}” 조에서 탈퇴할까요?\n\n탈퇴 후 조 이름을 다시 입력해 다른 조에 들어갈 수 있습니다. 조가 확정되기 전까지만 가능합니다.`)) return;
+  const finalizedNotice = state.team?.rosterFinalized
+    ? "조 명단과 역할 배정 준비가 다시 계산됩니다."
+    : "탈퇴 후 조 이름을 다시 입력해 다른 조에 들어갈 수 있습니다.";
+  if (!window.confirm(`“${teamName}” 조에서 탈퇴할까요?\n\n${finalizedNotice}\nTHE WAR QR 스캔 전까지만 가능합니다.`)) return;
   const viewContext = captureViewContext();
   state.teamSetupInFlight = true;
   try {
@@ -1458,9 +1465,10 @@ function renderTeamRoles() {
     <section class="simple-party-members">
       <div class="home-section-heading"><h2>확정된 조원</h2><span>${memberCount}명</span></div>
       <div class="team-role-roster-list">${teamRosterRowsHtml(team)}</div>
-      <p class="notice">조 명단이 확정되었습니다. 각자의 장비를 충분히 준비하세요. 역할은 마지막 날 THE WAR에서 현장 배분합니다.</p>
+      <p class="notice">THE WAR QR 스캔 전까지 조원 탈퇴·영입이 가능합니다. 조원이 바뀌면 스캔과 역할 배정은 다시 시작됩니다.</p>
     </section>
     <button type="button" class="team-role-home-button is-complete" onclick="nav('/party')">조 현황 보기</button>
+    <button type="button" class="party-lobby-leave" onclick="leaveTeam()">조 탈퇴 · 조 이름 다시 입력</button>
   </div>`;
   startTeamRosterPoll();
 }
@@ -2214,8 +2222,18 @@ function renderMissionQr(reward, code, claimed, pageTopbar) {
   const profile = roleMissionProfile(reward.armor);
   const assignment = state.team?.war?.assignments?.find((item) => item.armor === reward.armor);
   const representativeName = assignment?.playerName || "담당 조원";
-  const started = state.startedMissionCode === code;
+  const readiness = state.missionReadiness;
+  const qualified = Boolean(readiness?.qualified);
+  const started = state.startedMissionCode === code || qualified;
   const missionIndex = Math.max(0, state.armor.findIndex((item) => item.code === reward.armor)) + 1;
+  const unpreparedNames = (readiness?.unpreparedMembers || []).map((member) => member.name).join(", ");
+  const readinessHtml = readiness ? (qualified
+    ? `<section class="mission-readiness-card is-ready"><span class="mission-readiness-mark">✓</span><div><strong>팀 장비 준비 완료 · 바로 미션 수행</strong><small>통합 전투력 ${formatNumber(readiness.currentPower)} / 최소 ${formatNumber(readiness.requiredPower)}</small></div></section>`
+    : `<section class="mission-readiness-card is-penalty"><span class="mission-readiness-mark">!</span><div><strong>장비 최소 조건 미충족</strong><small>${escapeHtml(unpreparedNames || "장비 미보유 조원")} · 통합 전투력 ${formatNumber(readiness.currentPower)} / 최소 ${formatNumber(readiness.requiredPower)}</small></div><p><b>${escapeHtml(readiness.penalty?.title || "전원 얼차려")}</b>${escapeHtml(readiness.penalty?.instruction || "전원 안전 전투 자세 후 시작")}</p><em>${escapeHtml(readiness.penalty?.alternative || "")}</em></section>`)
+    : "";
+  const stepsHtml = (armor.steps || []).length
+    ? `<ol class="mission-step-list">${armor.steps.map((step) => `<li>${escapeHtml(step)}</li>`).join("")}</ol>`
+    : "";
   const statusHtml = claimed
     ? `<div class="mission-encounter-result is-complete"><span>✓</span><div><strong>시험 완료!</strong><small>보상 획득까지 완료했습니다.</small></div></div>`
     : started
@@ -2225,7 +2243,7 @@ function renderMissionQr(reward, code, claimed, pageTopbar) {
     ? `<button type="button" class="mission-encounter-button is-complete" onclick="nav('/forest')">THE WAR로 돌아가기</button>`
     : started
       ? `<button type="button" class="mission-encounter-button reward" onclick="claimQrReward('${escapeHtml(code)}', { auto: false })">미션 완료 · 보상 받기 <span>+1뽑</span></button><p class="mission-encounter-caution">진행자가 성공을 확인한 뒤 눌러주세요.</p>`
-      : `<button type="button" class="mission-encounter-button" onclick="startMissionTrial('${escapeHtml(code)}')">미션 시작 <span>➜</span></button>`;
+      : `<button type="button" class="mission-encounter-button" onclick="startMissionTrial('${escapeHtml(code)}')">전원 얼차려 완료 · 미션 시작 <span>➜</span></button>`;
   app.innerHTML = `<div class="student-page reward-page mission-encounter-page">
     ${pageTopbar}
     <section class="mission-encounter-hero">
@@ -2239,16 +2257,19 @@ function renderMissionQr(reward, code, claimed, pageTopbar) {
       <div><span>${escapeHtml(armor.name)}</span><strong>${escapeHtml(armor.warRole || profile.stat)} · ${escapeHtml(representativeName)}</strong><small>이 파트를 맡은 대표가 도전합니다</small></div>
       <em>${escapeHtml(profile.stat)}</em>
     </section>
+    ${readinessHtml}
     <section class="mission-brief-card">
       <div class="mission-brief-heading"><span>MISSION</span><strong>${escapeHtml(profile.style)}</strong></div>
-      <p>${escapeHtml(reward.description || profile.mission)}</p>
+      <p>${escapeHtml(armor.mission || reward.description || profile.mission)}</p>
+      ${stepsHtml}
       ${statusHtml}
       ${actionHtml}
     </section>
+    ${armor.teacherCue ? `<section class="mission-teacher-card"><strong>진행자 연출</strong><p>${escapeHtml(armor.teacherCue)}</p><small>${escapeHtml(armor.safetyNote || "학생 안전을 먼저 확인하세요.")}</small></section>` : ""}
   </div>`;
 }
 
-function renderQr() {
+async function renderQr() {
   document.body.classList.add("player-mode");
   const code = qrCodeForRoute();
   const reward = qrRewardByCode(code);
@@ -2297,7 +2318,27 @@ function renderQr() {
     return;
   }
   if (reward.type === "mission") {
-    renderMissionQr(reward, code, claimed, pageTopbar);
+    const renderedPath = route().path;
+    app.innerHTML = `<div class="student-page reward-page mission-encounter-page">${pageTopbar}<section class="mission-encounter-hero"><span>THE WAR MISSION</span><h1>사탄 QR 확인 중...</h1><p>조 장비와 담당 역할을 검증하고 있습니다.</p></section></div>`;
+    try {
+      const payload = await api("qr-state", { playerId: state.me.id, code });
+      if (route().path !== renderedPath) return;
+      state.armor = payload.armor || state.armor;
+      state.forestTrials = payload.forestTrials || state.forestTrials;
+      state.qrRewards = payload.qrRewards || state.qrRewards;
+      state.claimedQrCodes = payload.claimedQrCodes || state.claimedQrCodes;
+      state.ranking = payload.ranking || state.ranking;
+      state.partyRanking = payload.partyRanking || state.partyRanking;
+      state.booths = payload.booths || state.booths;
+      state.team = payload.team || state.team;
+      state.missionReadiness = payload.missionReadiness || null;
+      applyWarSchedule(payload);
+      if (payload.me) setMe(payload.me);
+      renderMissionQr(payload.qrReward || reward, code, Boolean(payload.claimed), pageTopbar);
+    } catch (error) {
+      if (route().path !== renderedPath) return;
+      app.innerHTML = `<div class="student-page reward-page mission-encounter-page">${pageTopbar}<section class="mission-encounter-hero"><span>THE WAR MISSION</span><h1>미션 입장 불가</h1><p>${escapeHtml(error.message)}</p></section><button type="button" class="mission-encounter-button" onclick="nav('/forest')">THE WAR로 돌아가기</button></div>`;
+    }
     return;
   }
   if (reward.type === "draw") {
